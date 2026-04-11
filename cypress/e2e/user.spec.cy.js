@@ -16,8 +16,10 @@ describe('Orange HRM Tests', () => {
     genericField: ".oxd-input--active",
     dateField: "[placeholder='yyyy-dd-mm']",
     dateCloseButton: ".--close",
+    genericCombobox: ".oxd-select-text--arrow",
     genderButton: ".oxd-radio-wrapper",
-    submitButton: "[type='submit']"
+    submitButton: "[type='submit']",
+    
 
   }
 
@@ -37,11 +39,15 @@ describe('Orange HRM Tests', () => {
     cy.get(selectorsList.genericField).eq(5).clear().type('165348'),
     cy.get(selectorsList.dateField).eq(0).clear().type('2029-05-03'),
     cy.get(selectorsList.dateCloseButton).click(),
+    cy.get(selectorsList.genericCombobox).eq(0).click(),
+    cy.get('.oxd-select-dropdown > :nth-child(27)').click(),
+    cy.get(selectorsList.genericCombobox).eq(1).click(),
+    cy.get('.oxd-select-dropdown > :nth-child(4)').click(),
     cy.get(selectorsList.dateField).eq(1).clear().type('1990-22-01'),
     cy.get(selectorsList.dateCloseButton).click(),
     cy.get(selectorsList.genderButton).eq(1).click(),
     cy.get(selectorsList.genericField).eq(9).clear().type('Test_Field'),
-    cy.get(selectorsList.submitButton).eq(0).click(),
+    cy.get(selectorsList.submitButton).eq(0).click({force: true}),
     cy.get('body').should('contain', 'Successfully Updated'),
     cy.get('.oxd-toast-close')
 

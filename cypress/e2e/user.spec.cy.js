@@ -3,9 +3,12 @@ import LoginPage from '../pages/loginPage'
 import NavbarPage from '../pages/navbarPage'
 import MyInfoPage from '../pages/myInfoPage'
 
+const Chance = require('chance')
+
 const navbarPage = new NavbarPage()
 const myInfoPage = new MyInfoPage()
 const loginPage = new LoginPage()
+const chance = new Chance()
 
 
 describe('Orange HRM Tests', () => {
@@ -16,8 +19,10 @@ describe('Orange HRM Tests', () => {
 
     navbarPage.accessMyInfo(),
 
-    myInfoPage.fillMyPersonalDetails('Jane', 'A.', 'Doe'),
-    myInfoPage.fillEmloyeeDetails('123abc', 'abc123', 'DX6789', '2026-15-11'),
+    myInfoPage.fillMyPersonalDetails(chance.first(), chance.last(), chance.last()),
+    myInfoPage.fillEmloyeeDetails(chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
+    chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }),
+    chance.string({ length: 8, casing: 'upper', alpha: true, numeric: true }), '2026-15-11'),
     myInfoPage.fillStatus('1990-22-01'),
     myInfoPage.saveForm()
   })

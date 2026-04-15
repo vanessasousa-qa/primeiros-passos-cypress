@@ -1,60 +1,24 @@
 import userData from '../fixtures/userData.json'
 import LoginPage from '../pages/loginPage'
-import DashboardPage from '../pages/dashboardPage'
 import NavbarPage from '../pages/navbarPage'
+import MyInfoPage from '../pages/myInfoPage'
 
-const loginPage = new LoginPage()
-const dashboardPage = new DashboardPage()
 const navbarPage = new NavbarPage()
+const myInfoPage = new MyInfoPage()
+const loginPage = new LoginPage()
 
 
 describe('Orange HRM Tests', () => {
 
-  const selectorsList = {
-    firtNameField: "[name='firstName']",
-    middleNameField: "[name='middleName']",
-    lastNameField: "[name='lastName']",
-    genericField: ".oxd-input--active",
-    dateField: "[placeholder='yyyy-dd-mm']",
-    dateCloseButton: ".--close",
-    genericCombobox: ".oxd-select-text--arrow",
-    genderButton: ".oxd-radio-wrapper",
-    submitButton: ".orangehrm-left-space",
-}
-
-  it.only('User Info Update - Success', () => {
+  it('User Info Update - Success', () => {
     loginPage.accessLoginPage(),
     loginPage.loginWithAnyUser(userData.userSuccess.username, userData.userSuccess.password),
-    dashboardPage.checkDashboardPage(),
-    navbarPage.accessMyInfo()
-   /* 
-      
-      cy.get(selectorsList.firtNameField).clear().type('Vanessa'),
-      cy.get(selectorsList.middleNameField).clear().type('Lynn'),
-      cy.get(selectorsList.lastNameField).clear().type('Montgomery'),
-      cy.get(selectorsList.genericField).eq(3).clear().type('Employee'),
-      cy.get(selectorsList.genericField).eq(4).clear().type('OtherID'),
-      cy.get(selectorsList.genericField).eq(5).clear().type('165348'),
-      cy.get(selectorsList.dateField).eq(0).clear().type('2029-05-03'),
-      cy.get(selectorsList.dateCloseButton).click(),
-      cy.get(selectorsList.genericCombobox).eq(0).click(),
-      cy.get('.oxd-select-dropdown > :nth-child(27)').click(),
-      cy.get(selectorsList.genericCombobox).eq(1).click(),
-      cy.get('.oxd-select-dropdown > :nth-child(4)').click(),
-      cy.get(selectorsList.dateField).eq(1).clear().type('1990-22-01'),
-      cy.get(selectorsList.dateCloseButton).click(),
-      cy.get(selectorsList.genderButton).eq(1).click(),
-      cy.get(selectorsList.genericField).eq(9).clear().type('Test_Field'),
-      cy.get(selectorsList.submitButton).eq(0).click({ force: true }),
-      cy.get('body').should('contain', 'Successfully Updated'),
-      cy.get('.oxd-toast-close') */
-  })
 
-  it('Login - Fail', () => {
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).type(userData.userFail.username),
-    cy.get(selectorsList.passwordFild).type(userData.userFail.password),
-    cy.get(selectorsList.loginButton).click(),
-    cy.get(selectorsList.wrongCredentialAlert)
+    navbarPage.accessMyInfo(),
+
+    myInfoPage.fillMyPersonalDetails('Jane', 'A.', 'Doe'),
+    myInfoPage.fillEmloyeeDetails('123abc', 'abc123', 'DX6789', '2026-15-11'),
+    myInfoPage.fillStatus('1990-22-01'),
+    myInfoPage.saveForm()
   })
 })
